@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../services/billing_provider.dart';
 import '../utils/constants.dart';
 import '../models/invoice_model.dart';
+import 'invoice_detail_screen.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -140,10 +141,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       else
                         ...displayedInvoices.map((inv) {
                           bool isPaid = inv.status == 'PAID';
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 12),
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (_) => InvoiceDetailScreen(invoice: inv)),
+                              );
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 12),
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16),
                             ),
@@ -192,8 +200,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 )
                               ],
                             ),
-                          );
-                        }).toList(),
+                          ),
+                        );
+                      }).toList(),
                     ],
                   ),
                 ),
